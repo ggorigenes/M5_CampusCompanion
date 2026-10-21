@@ -259,11 +259,18 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="UU7-Qe-nBJ">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="qPG-C7-Ted">
-                            <connections>
-                                <action selector="addAnnouncementTapped:" destination="dg8-Kc-OvG" id="OOj-Ta-q16"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="qPG-C7-Ted">
+                                <connections>
+                                    <action selector="addAnnouncementTapped:" destination="dg8-Kc-OvG" id="OOj-Ta-q16"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="refresh" id="kMO-1t-ecQ">
+                                <connections>
+                                    <action selector="refreshTapped:" destination="dg8-Kc-OvG" id="M6H-sP-8tI"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>

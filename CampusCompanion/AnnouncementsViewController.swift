@@ -1,6 +1,10 @@
 import UIKit
 import CoreData
 
+private enum RemoteEndpoint {
+    static let announcements = URL(string: "https://raw.githubusercontent.com/feu-mad2/campus-companion-api/main/announcements.json")!
+}
+
 class AnnouncementsViewController: UITableViewController {
     private var announcements: [CampusAnnouncement] = []
 
@@ -8,11 +12,37 @@ class AnnouncementsViewController: UITableViewController {
         (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     }
     
+    @IBAction func refreshTapped(_ sender: Any) {
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Campus Announcements"
+        
+        fetchAnnouncementsFromServer()
+        
         seedInitialAnnouncementsIfNeeded()
         loadAnnouncements()
+    }
+    
+    func fetchAnnouncementsFromServer() {
+        let task = URLSession.shared.dataTask(
+            with: RemoteEndpoint.announcements
+        ) { data, response, error in
+            if let error = error {
+                print("Network error: \(error.localizedDescription)")
+                return
+            }
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200...299).contains(httpResponse.statusCode) else {
+                print("Unexpected server response.")
+                return
+            }
+            guard let data = data else { return }
+            print("Reached network handler with \(data.count) bytes.")
+            // decoding logic added in Step 6
+        }
+        task.resume()
     }
     
     private func seedInitialAnnouncementsIfNeeded() {
